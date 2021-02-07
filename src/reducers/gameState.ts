@@ -8,19 +8,19 @@ export enum stateId {
 }
 // -------------- CARD GAME ---------------
 export enum cardValue {
-    Ace,
-    King,
-    Queen,
-    Jack,
-    _10,
-    _9,
-    _8,
-    _7,
-    _6,
-    _5,
-    _4,
-    _3,
-    _2,
+    Ace = "a",
+    King = "k",
+    Queen = "q",
+    Jack = "j",
+    _10 = 10,
+    _9 = 9,
+    _8 = 8,
+    _7 = 7,
+    _6 = 6,
+    _5 = 5,
+    _4 = 4,
+    _3 = 3,
+    _2 = 2,
 }
 export enum cardColor {
     Clubs,
