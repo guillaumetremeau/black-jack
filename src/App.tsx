@@ -1,5 +1,7 @@
 import React from "react";
 import "./App.css";
+import Actions from "./containers/Actions";
+import Cards from "./containers/Cards";
 import ResetScore from "./containers/ResetScore";
 import Score from "./containers/Score";
 
@@ -11,8 +13,11 @@ function App() {
                 <Score />
             </header>
             <div className="App-main">
-                <div></div>
+                <Cards />
             </div>
+            <footer className="App-footer">
+                <Actions />
+            </footer>
         </div>
     );
 }

@@ -1,20 +1,22 @@
 import { connect } from "react-redux";
-import { resetScore } from "../actions";
-import ResetScore from "../components/ResetScore";
+import { newGame } from "../actions";
+import Actions from "../components/Actions";
 import { RootState } from "../reducers";
 
 const mapStateToProps = (state: RootState) => {
-    return {};
+    return {
+        stateId: state.gameState.stateId,
+    };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
         onSubmit: () => {
-            dispatch(resetScore());
+            dispatch(newGame());
         },
     };
 };
 
 export const connector = connect(mapStateToProps, mapDispatchToProps);
 
-export default connector(ResetScore);
+export default connector(Actions);

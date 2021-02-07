@@ -1,4 +1,4 @@
-import { LOST_SUCCEEDED, NEW_GAME_SUCCEEDED, WIN_SUCCEEDED } from "../actions";
+import { LOST, RESET_SCORE, WIN } from "../actions";
 
 export type score = {
     wins: number;
@@ -12,17 +12,17 @@ const initialState: score = {
 
 const score = (state: score = initialState, action: any): score => {
     switch (action.type) {
-        case LOST_SUCCEEDED:
+        case LOST:
             return {
                 wins: state.wins,
                 loses: state.loses++,
             };
-        case NEW_GAME_SUCCEEDED:
+        case RESET_SCORE:
             return {
                 wins: 0,
                 loses: 0,
             };
-        case WIN_SUCCEEDED:
+        case WIN:
             return {
                 wins: state.wins++,
                 loses: state.loses,

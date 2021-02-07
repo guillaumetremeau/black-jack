@@ -1,29 +1,44 @@
 // ACTIONS
+export const HIT = "HIT";
 export const LOST = "LOST";
-export const LOST_FAILED = "LOST_FAILED";
-export const LOST_SUCCEEDED = "LOST_SUCCEEDED";
 export const NEW_GAME = "NEW_GAME";
-export const NEW_GAME_FAILED = "NEW_GAME_FAILED";
-export const NEW_GAME_SUCCEEDED = "NEW_GAME_SUCCEEDED";
+export const RESET_SCORE = "RESET_SCORE";
+export const STAND = "STAND";
 export const WIN = "WIN";
-export const WIN_FAILED = "WIN_FAILED";
-export const WIN_SUCCEEDED = "WIN_SUCCEEDED";
 
 // 1. Lost a set
 export const lost = () => {
-  return {
-    type: LOST,
-  };
+    return {
+        type: LOST,
+    };
 };
 // 2. Start a new Game
 export const newGame = () => {
-  return {
-    type: NEW_GAME,
-  };
+    return {
+        type: NEW_GAME,
+    };
 };
 // 3. Win a set
 export const win = () => {
-  return {
-    type: WIN,
-  };
+    return {
+        type: WIN,
+    };
+};
+// 4. ResetScore
+export const resetScore = () => {
+    return {
+        type: RESET_SCORE,
+    };
+};
+// 5. Hit new card
+export const hit = () => {
+    return {
+        type: HIT,
+    };
+};
+// 6. Stand game
+export const stand = () => {
+    return {
+        type: STAND,
+    };
 };
