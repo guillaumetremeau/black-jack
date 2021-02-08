@@ -4,7 +4,6 @@ import { RootState } from "../reducers";
 
 const mapStateToProps = (state: RootState) => {
     return {
-        gameState: state.gameState.stateId,
         playerCards: state.gameState.playerCards,
         bankCards: state.gameState.bankCards,
     };

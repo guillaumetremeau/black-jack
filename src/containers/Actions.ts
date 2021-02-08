@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { newGame } from "../actions";
+import { hit, newGame, stand } from "../actions";
 import Actions from "../components/Actions";
 import { RootState } from "../reducers";
 
@@ -11,8 +11,14 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        onSubmit: () => {
+        newGame: () => {
             dispatch(newGame());
+        },
+        hit: () => {
+            dispatch(hit());
+        },
+        stand: () => {
+            dispatch(stand());
         },
     };
 };

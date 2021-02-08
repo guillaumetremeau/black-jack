@@ -1,10 +1,13 @@
-import { LOST, NEW_GAME, RESET_SCORE, WIN } from "../actions";
+import { BLACKJACK, BUST, HIT, NEW_GAME, STAND } from "../actions";
 
 const DECK_NUMBER = 6;
 
 export enum stateId {
     RUNNING,
     WAITING,
+    BUST,
+    BLACKJACK,
+    STAND,
 }
 // -------------- CARD GAME ---------------
 export enum cardValue {
@@ -76,54 +79,76 @@ const shuffleDeck = (deck: card[]): card[] => {
     }
     return deck;
 };
-const deal = (gameState: gameState): gameState => {
-    gameState.playerCards.push(gameState.deck.pop() as card);
-    gameState.bankCards.push(gameState.deck.pop() as card);
-    gameState.playerCards.push(gameState.deck.pop() as card);
-    console.log(gameState);
-    return gameState;
+// Deal immutable
+const deal = (gameState: GameState, isPlayer: boolean): GameState => {
+    if (isPlayer) {
+        gameState.playerCards.push(gameState.deck.pop() as card);
+    } else gameState.bankCards.push(gameState.deck.pop() as card);
+    return {
+        stateId: gameState.stateId,
+        deck: [...gameState.deck],
+        bankCards: [...gameState.bankCards],
+        playerCards: [...gameState.playerCards],
+    };
 };
 // ------------- END of Card Game -----------
-export type gameState = {
+export type GameState = {
     stateId: stateId;
     deck: card[];
     playerCards: card[];
     bankCards: card[];
 };
 
-const initialState: gameState = {
+const initialState: GameState = {
     stateId: stateId.WAITING,
     deck: shuffleDeck(buildDeck(DECK_NUMBER)),
     playerCards: [],
     bankCards: [],
 };
 
-const gameState = (state: gameState = initialState, action: any): gameState => {
+const gameState = (state: GameState = initialState, action: any): GameState => {
     switch (action.type) {
-        case WIN:
-        case LOST:
-            return {
-                stateId: stateId.WAITING,
-                deck: state.deck,
-                playerCards: state.playerCards,
-                bankCards: state.bankCards,
-            };
         case NEW_GAME:
             let deck = state.deck;
             if (state.deck.length < DECK_NUMBER * 13) {
                 // Cut card at 75%
                 deck = shuffleDeck(buildDeck(DECK_NUMBER));
             }
-            let gameState: gameState = {
+            let gameState: GameState = {
                 stateId: stateId.RUNNING,
                 deck: deck,
                 playerCards: [],
                 bankCards: [],
             };
             // Deal first cards
-            gameState = deal(gameState);
+            gameState = deal(gameState, true);
+            gameState = deal(gameState, false);
+            gameState = deal(gameState, true);
             return gameState;
-
+        case HIT:
+            return deal(state, true);
+        case BUST:
+            if (action.isPlayer) {
+                return {
+                    stateId: stateId.BUST,
+                    deck: state.deck,
+                    playerCards: state.playerCards,
+                    bankCards: state.bankCards,
+                };
+            } else return state;
+        case BLACKJACK:
+            if (action.isPlayer) {
+                return {
+                    stateId: stateId.BLACKJACK,
+                    deck: state.deck,
+                    playerCards: state.playerCards,
+                    bankCards: state.bankCards,
+                };
+            } else return state;
+        case STAND:
+            let newState = deal(state, false);
+            newState.stateId = stateId.STAND;
+            return newState;
         default:
             return state;
     }

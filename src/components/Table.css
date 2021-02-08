@@ -1,0 +1,12 @@
+.table .wrapper {
+    position: relative;
+    top: auto;
+    left: auto;
+    transition: top 0.8s, left 0.8s;
+    visibility: hidden;
+    z-index: 1;
+}
+.table .wrapper.finalPlace {
+    top: 0 !important;
+    left: 0 !important;
+}
