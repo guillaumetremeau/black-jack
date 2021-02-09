@@ -12,7 +12,7 @@ const ResetScore = (props: Props) => {
                     props.onSubmit();
                 }}
             >
-                <button id="resetScore" type="submit">
+                <button className="button" id="resetScore" type="submit">
                     Reset score
                 </button>
             </form>

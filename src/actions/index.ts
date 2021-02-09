@@ -40,9 +40,10 @@ export const hit = () => {
     };
 };
 // 6. Player stand game / waiting for bank to proceed
-export const stand = () => {
+export const stand = (score?: number) => {
     return {
         type: STAND,
+        score: score,
     };
 };
 // 7. When every players stands

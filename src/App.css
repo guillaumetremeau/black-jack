@@ -4,17 +4,19 @@
     color: white;
     background-color: #014d2c;
     padding: 0 5%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.6em;
 }
 
 .App-header {
-    height: 8vh;
+    height: 12vh;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
 .App-footer {
-    height: 8vh;
+    height: 16vh;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -22,7 +24,7 @@
 }
 
 .App-main {
-    height: 84vh;
+    height: 72vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -31,4 +33,53 @@
 
 .App-link {
     color: #00d371;
+}
+
+.button {
+    display: inline-block;
+    margin: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.1875rem;
+    outline: none;
+    background-color: #338a38;
+    color: white;
+    font-family: inherit;
+    font-size: 0.75em;
+    font-weight: 400;
+    line-height: 1.5rem;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 150ms ease-out;
+}
+.button:focus,
+.button:hover {
+    background-color: #1a591f;
+    box-shadow: 0 0 0 0.1875rem white, 0 0 0 0.375rem #1a591f;
+}
+.button:active {
+    background-color: #163a18;
+    box-shadow: 0 0 0 0.1875rem #163a18, 0 0 0 0.375rem #163a18;
+    transition-duration: 75ms;
+}
+.button.is-outlined {
+    border: 0.1875rem solid #338a38;
+    background-color: transparent;
+    color: #338a38;
+}
+.button.is-outlined:focus,
+.button.is-outlined:hover {
+    border-color: #1a591f;
+    color: #1a591f;
+}
+.button.is-outlined:active {
+    border-color: #163a18;
+    color: #163a18;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }

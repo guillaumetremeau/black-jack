@@ -1,6 +1,7 @@
 import { ConnectedProps } from "react-redux";
 import { connector } from "../containers/Actions";
 import { stateId } from "../reducers/gameState";
+import { calculateScore } from "./Table";
 
 type Props = ConnectedProps<typeof connector>;
 
@@ -26,7 +27,7 @@ const Actions = (props: Props) => {
                         props.newGame();
                     }}
                 >
-                    <button id="newGame" type="submit">
+                    <button className="button" id="newGame" type="submit">
                         New Game
                     </button>
                 </form>
@@ -61,17 +62,17 @@ const Actions = (props: Props) => {
                         props.hit();
                     }}
                 >
-                    <button id="newGame" type="submit">
+                    <button className="button" id="newGame" type="submit">
                         Hit
                     </button>
                 </form>
                 <form
                     onSubmit={(e) => {
                         e.preventDefault();
-                        props.stand();
+                        props.stand(calculateScore(props.playerCards));
                     }}
                 >
-                    <button id="newGame" type="submit">
+                    <button className="button" id="newGame" type="submit">
                         Stand
                     </button>
                 </form>

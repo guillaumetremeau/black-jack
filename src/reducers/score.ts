@@ -1,4 +1,4 @@
-import { BLACKJACK, BUST, OVER, RESET_SCORE } from "../actions";
+import { BLACKJACK, BUST, OVER, RESET_SCORE, STAND } from "../actions";
 
 export type score = {
     wins: number;
@@ -57,7 +57,10 @@ const score = (state: score = initialState, action: any): score => {
                 }
             }
         case OVER:
-            if (state.playerScore > action.score) {
+            if (
+                state.playerScore === "BLACKJACK" ||
+                state.playerScore > action.score
+            ) {
                 return {
                     wins: state.wins + 1,
                     loses: state.loses,
@@ -75,6 +78,15 @@ const score = (state: score = initialState, action: any): score => {
                     loses: state.loses + 1,
                     playerScore: 0,
                 };
+        case STAND:
+            if (action.score) {
+                return {
+                    wins: state.wins,
+                    loses: state.loses,
+                    playerScore: action.score,
+                };
+            } else return state;
+
         default:
             return state;
     }

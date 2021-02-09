@@ -12,11 +12,6 @@ interface Props {
     over: (score: number) => void;
 }
 class Table extends React.Component<Props> {
-    constructor(props: Props) {
-        super(props);
-        this.score = 0;
-    }
-    private score: number;
     componentDidUpdate() {
         // Place card on top of the deck dynamically
         let targetPos = findPos(document.getElementById("lastCard"));
@@ -37,20 +32,23 @@ class Table extends React.Component<Props> {
                 "visible"
             );
             setTimeout(() => {
-                if ((cards[index] as HTMLElement).classList)
+                if (
+                    (cards[index] as HTMLElement) &&
+                    (cards[index] as HTMLElement).classList
+                )
                     (cards[index] as HTMLElement).classList.add("finalPlace");
             }, 1);
         }
 
-        this.score = calculateScore(this.props.cards);
+        let score = calculateScore(this.props.cards);
 
-        if (this.score === 21 && this.props.cards.length === 2)
+        if (score === 21 && this.props.cards.length === 2)
             this.props.blackjack(this.props.isPlayer);
-        if (this.score > 21) this.props.bust(this.props.isPlayer);
+        if (score > 21) this.props.bust(this.props.isPlayer);
         if (!this.props.isPlayer && this.props.cards.length > 1) {
-            if (this.score < 17) {
+            if (score < 17) {
                 setTimeout(this.props.stand, 1000);
-            } else if (this.score <= 21) this.props.over(this.score);
+            } else if (score <= 21) this.props.over(score);
         }
     }
     render() {

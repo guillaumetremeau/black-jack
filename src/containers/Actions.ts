@@ -6,6 +6,7 @@ import { RootState } from "../reducers";
 const mapStateToProps = (state: RootState) => {
     return {
         stateId: state.gameState.stateId,
+        playerCards: state.gameState.playerCards,
     };
 };
 
@@ -17,8 +18,8 @@ const mapDispatchToProps = (dispatch: any) => {
         hit: () => {
             dispatch(hit());
         },
-        stand: () => {
-            dispatch(stand());
+        stand: (score?: number) => {
+            dispatch(stand(score));
         },
     };
 };
