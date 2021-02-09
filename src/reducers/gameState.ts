@@ -1,10 +1,14 @@
-import { BLACKJACK, BUST, HIT, NEW_GAME, STAND } from "../actions";
+import { BLACKJACK, BUST, HIT, NEW_GAME, OVER, STAND } from "../actions";
+import { calculateScore } from "../components/Table";
 
 const DECK_NUMBER = 6;
 
 export enum stateId {
     RUNNING,
     WAITING,
+    DRAW,
+    LOSE,
+    WIN,
     BUST,
     BLACKJACK,
     STAND,
@@ -135,20 +139,63 @@ const gameState = (state: GameState = initialState, action: any): GameState => {
                     playerCards: state.playerCards,
                     bankCards: state.bankCards,
                 };
-            } else return state;
-        case BLACKJACK:
-            if (action.isPlayer) {
+            } else
                 return {
-                    stateId: stateId.BLACKJACK,
+                    stateId: stateId.WIN,
                     deck: state.deck,
                     playerCards: state.playerCards,
                     bankCards: state.bankCards,
                 };
-            } else return state;
+        case BLACKJACK:
+            if (action.isPlayer) {
+                let blackjackState = deal(state, false);
+                blackjackState.stateId = stateId.BLACKJACK;
+                return blackjackState;
+            } else {
+                if (state.stateId === stateId.BLACKJACK) {
+                    return {
+                        stateId: stateId.DRAW,
+                        deck: state.deck,
+                        playerCards: state.playerCards,
+                        bankCards: state.bankCards,
+                    };
+                } else {
+                    return {
+                        stateId: stateId.LOSE,
+                        deck: state.deck,
+                        playerCards: state.playerCards,
+                        bankCards: state.bankCards,
+                    };
+                }
+            }
         case STAND:
             let newState = deal(state, false);
-            newState.stateId = stateId.STAND;
+            if (newState.stateId !== stateId.BLACKJACK)
+                newState.stateId = stateId.STAND;
             return newState;
+        case OVER:
+            let playerScore = calculateScore(state.playerCards);
+            if (playerScore > action.score) {
+                return {
+                    stateId: stateId.WIN,
+                    deck: state.deck,
+                    playerCards: state.playerCards,
+                    bankCards: state.bankCards,
+                };
+            } else if (playerScore === action.score) {
+                return {
+                    stateId: stateId.DRAW,
+                    deck: state.deck,
+                    playerCards: state.playerCards,
+                    bankCards: state.bankCards,
+                };
+            } else
+                return {
+                    stateId: stateId.LOSE,
+                    deck: state.deck,
+                    playerCards: state.playerCards,
+                    bankCards: state.bankCards,
+                };
         default:
             return state;
     }

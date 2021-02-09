@@ -9,6 +9,7 @@ interface Props {
     bust: (isPLayer: boolean) => void;
     blackjack: (isPLayer: boolean) => void;
     stand: () => void;
+    over: (score: number) => void;
 }
 class Table extends React.Component<Props> {
     constructor(props: Props) {
@@ -36,46 +37,20 @@ class Table extends React.Component<Props> {
                 "visible"
             );
             setTimeout(() => {
-                (cards[index] as HTMLElement).classList.add("finalPlace");
+                if ((cards[index] as HTMLElement).classList)
+                    (cards[index] as HTMLElement).classList.add("finalPlace");
             }, 1);
         }
 
-        // Calculate amount and bust if necessary or stop if bank and >= 17
-        let sum = [0];
-        this.props.cards.map((card) => {
-            switch (card.value) {
-                case cardValue.Jack:
-                case cardValue.King:
-                case cardValue.Queen:
-                    sum.map((total, index) => (sum[index] = total + 10));
-                    break;
-                case cardValue.Ace:
-                    sum.map((total, index) => {
-                        sum[index] = total + 11;
-                        // will store in increasing order
-                        sum.unshift(total + 1);
-                    });
-                    break;
-                default:
-                    let value: number = card.value;
-                    sum.map((total, index) => (sum[index] = total + value));
-                    break;
-            }
-        });
-        let score = sum[0];
-        sum.map((total) => {
-            if (total > score && total <= 21) score = total;
-        });
-        this.score = score;
+        this.score = calculateScore(this.props.cards);
+
         if (this.score === 21 && this.props.cards.length === 2)
             this.props.blackjack(this.props.isPlayer);
         if (this.score > 21) this.props.bust(this.props.isPlayer);
-        if (
-            !this.props.isPlayer &&
-            this.props.cards.length > 1 &&
-            this.score < 17
-        ) {
-            setTimeout(this.props.stand, 1000);
+        if (!this.props.isPlayer && this.props.cards.length > 1) {
+            if (this.score < 17) {
+                setTimeout(this.props.stand, 1000);
+            } else if (this.score <= 21) this.props.over(this.score);
         }
     }
     render() {
@@ -189,3 +164,32 @@ function findPos(obj: any) {
     );
 }
 */
+
+export const calculateScore = (cards: card[]) => {
+    let sum = [0];
+    cards.map((card) => {
+        switch (card.value) {
+            case cardValue.Jack:
+            case cardValue.King:
+            case cardValue.Queen:
+                sum.map((total, index) => (sum[index] = total + 10));
+                break;
+            case cardValue.Ace:
+                sum.map((total, index) => {
+                    sum[index] = total + 11;
+                    // will store in increasing order
+                    sum.unshift(total + 1);
+                });
+                break;
+            default:
+                let value: number = card.value;
+                sum.map((total, index) => (sum[index] = total + value));
+                break;
+        }
+    });
+    let score = sum[0];
+    sum.map((total) => {
+        if (total > score && total <= 21) score = total;
+    });
+    return score;
+};

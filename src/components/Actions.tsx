@@ -5,9 +5,18 @@ import { stateId } from "../reducers/gameState";
 type Props = ConnectedProps<typeof connector>;
 
 const Actions = (props: Props) => {
-    if (props.stateId === stateId.WAITING || props.stateId === stateId.BUST) {
+    if (
+        props.stateId === stateId.WAITING ||
+        props.stateId === stateId.BUST ||
+        props.stateId === stateId.WIN ||
+        props.stateId === stateId.DRAW ||
+        props.stateId === stateId.LOSE
+    ) {
         let message = <></>;
         if (props.stateId === stateId.BUST) message = <span>Bust!</span>;
+        if (props.stateId === stateId.WIN) message = <span>You win!</span>;
+        if (props.stateId === stateId.DRAW) message = <span>Tie!</span>;
+        if (props.stateId === stateId.LOSE) message = <span>You lose!</span>;
         return (
             <div>
                 {message}

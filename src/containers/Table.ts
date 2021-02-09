@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { blackjack, bust, stand } from "../actions";
+import { blackjack, bust, over, stand } from "../actions";
 import Table from "../components/Table";
 import { RootState } from "../reducers";
 
@@ -26,6 +26,9 @@ const mapDispatchToProps = (dispatch: any) => {
         },
         stand: () => {
             dispatch(stand());
+        },
+        over: (score: number) => {
+            dispatch(over(score));
         },
     };
 };

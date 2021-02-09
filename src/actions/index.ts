@@ -5,6 +5,7 @@ export const HIT = "HIT";
 export const NEW_GAME = "NEW_GAME";
 export const RESET_SCORE = "RESET_SCORE";
 export const STAND = "STAND";
+export const OVER = "OVER";
 
 // 1. Bust from player or
 export const bust = (isPlayer: boolean) => {
@@ -38,9 +39,16 @@ export const hit = () => {
         type: HIT,
     };
 };
-// 6. Stand game
+// 6. Player stand game / waiting for bank to proceed
 export const stand = () => {
     return {
         type: STAND,
+    };
+};
+// 7. When every players stands
+export const over = (score: number) => {
+    return {
+        type: OVER,
+        score: score,
     };
 };
