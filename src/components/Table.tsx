@@ -174,10 +174,11 @@ export const calculateScore = (cards: card[]) => {
                 sum.map((total, index) => (sum[index] = total + 10));
                 break;
             case cardValue.Ace:
-                sum.map((total, index) => {
+                let temp = [...sum];
+                temp.map((total, index) => {
                     sum[index] = total + 11;
                     // will store in increasing order
-                    sum.unshift(total + 1);
+                    sum.push(total + 1);
                 });
                 break;
             default:
@@ -186,6 +187,7 @@ export const calculateScore = (cards: card[]) => {
                 break;
         }
     });
+    sum = sum.sort((a, b) => a - b);
     let score = sum[0];
     sum.map((total) => {
         if (total > score && total <= 21) score = total;
