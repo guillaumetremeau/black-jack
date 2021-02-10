@@ -9,7 +9,7 @@ const Score = (props: Props) => {
             <p>
                 Wins: <span>{props.wins}</span>
                 <br />
-                Loses: <span>{props.loses}</span>
+                Loss: <span>{props.loses}</span>
             </p>
         </div>
     );
