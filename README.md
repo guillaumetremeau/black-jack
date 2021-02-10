@@ -6,7 +6,7 @@ You can try the project on this link: http://guillaumetremeau.me/folders/works/b
 
 You can refer to https://en.wikipedia.org/wiki/Blackjack for the rules.
 
-Possible improvements:
+## Possible improvements:
 
 -   Improve responsiveness
 -   Add variant rules of blackjack
