@@ -39,16 +39,17 @@ class Table extends React.Component<Props> {
                     (cards[index] as HTMLElement).classList.add("finalPlace");
             }, 1);
         }
+        if (this.props.cards.length > 1) {
+            let score = calculateScore(this.props.cards);
 
-        let score = calculateScore(this.props.cards);
-
-        if (score === 21 && this.props.cards.length === 2)
-            this.props.blackjack(this.props.isPlayer);
-        if (score > 21) this.props.bust(this.props.isPlayer);
-        if (!this.props.isPlayer && this.props.cards.length > 1) {
-            if (score < 17) {
-                setTimeout(this.props.stand, 1000);
-            } else if (score <= 21) this.props.over(score);
+            if (score === 21 && this.props.cards.length === 2)
+                this.props.blackjack(this.props.isPlayer);
+            if (score > 21) this.props.bust(this.props.isPlayer);
+            if (!this.props.isPlayer && this.props.cards.length > 1) {
+                if (score < 17) {
+                    setTimeout(this.props.stand, 1000);
+                } else if (score <= 21) this.props.over(score);
+            }
         }
     }
     render() {

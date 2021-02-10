@@ -148,9 +148,11 @@ const gameState = (state: GameState = initialState, action: any): GameState => {
                 };
         case BLACKJACK:
             if (action.isPlayer) {
-                let blackjackState = deal(state, false);
-                blackjackState.stateId = stateId.BLACKJACK;
-                return blackjackState;
+                if (state.stateId === stateId.RUNNING) {
+                    let blackjackState = deal(state, false);
+                    blackjackState.stateId = stateId.BLACKJACK;
+                    return blackjackState;
+                } else return state;
             } else {
                 if (state.stateId === stateId.BLACKJACK) {
                     return {
