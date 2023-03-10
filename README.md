@@ -2,7 +2,7 @@
 
 Blackjack game with 6 decks in the pile and base rules. Cut card is set at 75%.
 
-You can try the project on this link: http://guillaumetremeau.me/folders/works/blackjack/.
+You can try the project on this link: https://black-jack.guillaumetremeau.me.
 
 You can refer to https://en.wikipedia.org/wiki/Blackjack for the rules.
 
